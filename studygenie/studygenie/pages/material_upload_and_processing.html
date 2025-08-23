@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Material Upload & Processing - StudyGenie</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fstudygenie1904back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.7"></script>
+</head>
+<body class="bg-background font-sans">
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-border">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary mr-2" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 2L4 7v10c0 8.84 5.5 16.14 12 18 6.5-1.86 12-9.16 12-18V7L16 2zm0 4.5L24 10v7c0 6.27-3.78 11.44-8 12.5-4.22-1.06-8-6.23-8-12.5v-7l8-3.5z"/>
+                        <path d="M12 14l2 2 6-6"/>
+                    </svg>
+                    <span class="text-xl font-bold text-text-primary font-heading">StudyGenie</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                    <a href="material_upload_and_processing.html" class="text-primary font-medium">Upload Materials</a>
+                    <a href="quiz_and_assessment_center.html" class="text-text-secondary hover:text-primary transition-colors">Quizzes</a>
+                    <a href="progress_analytics_dashboard.html" class="text-text-secondary hover:text-primary transition-colors">Analytics</a>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">JD</span>
+                        </div>
+                        <button class="text-text-secondary hover:text-primary transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-border">
+                <div class="flex flex-col space-y-4">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                    <a href="material_upload_and_processing.html" class="text-primary font-medium">Upload Materials</a>
+                    <a href="quiz_and_assessment_center.html" class="text-text-secondary hover:text-primary transition-colors">Quizzes</a>
+                    <a href="progress_analytics_dashboard.html" class="text-text-secondary hover:text-primary transition-colors">Analytics</a>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-border">
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">JD</span>
+                        </div>
+                        <span class="text-text-primary font-medium">John Doe</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-text-primary font-heading mb-2">Upload Study Materials</h1>
+            <p class="text-text-secondary">Transform your PDFs, images, and handwritten notes into interactive study content</p>
+        </div>
+
+        <!-- Mobile Workflow Steps -->
+        <div class="md:hidden mb-6">
+            <div class="flex items-center justify-between">
+                <div id="step1" class="flex items-center space-x-2 step-indicator active">
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-medium">1</div>
+                    <span class="text-sm font-medium text-primary">Upload</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-border mx-4"></div>
+                <div id="step2" class="flex items-center space-x-2 step-indicator">
+                    <div class="w-8 h-8 bg-gray-200 text-text-secondary rounded-full flex items-center justify-center text-sm font-medium">2</div>
+                    <span class="text-sm text-text-secondary">Categorize</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-border mx-4"></div>
+                <div id="step3" class="flex items-center space-x-2 step-indicator">
+                    <div class="w-8 h-8 bg-gray-200 text-text-secondary rounded-full flex items-center justify-center text-sm font-medium">3</div>
+                    <span class="text-sm text-text-secondary">Process</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Layout -->
+        <div class="hidden md:grid md:grid-cols-3 gap-8">
+            <!-- Upload Area -->
+            <div class="md:col-span-2">
+                <div id="uploadSection" class="bg-surface rounded-2xl shadow-card p-8">
+                    <h2 class="text-xl font-semibold text-text-primary font-heading mb-6">Upload Files</h2>
+                    
+                    <!-- Drag and Drop Zone -->
+                    <div id="dropZone" class="border-2 border-dashed border-border rounded-xl p-12 text-center hover:border-primary transition-colors cursor-pointer">
+                        <div class="space-y-4">
+                            <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto">
+                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-text-primary mb-2">Drop files here or click to browse</h3>
+                                <p class="text-text-secondary">Support for PDF, JPG, PNG, and handwritten notes</p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-6 text-sm text-text-secondary">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-error" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>PDF</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Images</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/>
+                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Handwritten</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Input -->
+                    <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden" />
+
+                    <!-- Upload Progress -->
+                    <div id="uploadProgress" class="hidden mt-6 space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-text-primary">Uploading files...</span>
+                                <span id="progressPercent" class="text-sm text-text-secondary">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded Files List -->
+                    <div id="filesList" class="hidden mt-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Uploaded Files</h3>
+                        <div id="filesContainer" class="space-y-3"></div>
+                    </div>
+
+                    <!-- OCR Processing -->
+                    <div id="ocrSection" class="hidden mt-8">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Text Recognition</h3>
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                                <span class="text-text-primary">Extracting text from images...</span>
+                            </div>
+                            <div id="ocrPreview" class="bg-white rounded border p-4 max-h-40 overflow-y-auto text-sm text-text-secondary">
+                                <p>Detected text will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Options Sidebar -->
+            <div class="space-y-6">
+                <!-- Categorization -->
+                <div id="categorizationSection" class="bg-surface rounded-2xl shadow-card p-6">
+                    <h3 class="text-lg font-semibold text-text-primary font-heading mb-4">Categorize Content</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="subjectSelect" class="block text-sm font-medium text-text-primary mb-2">Subject Area</label>
+                            <select id="subjectSelect" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value>Select subject</option>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="science">Science</option>
+                                <option value="history">History</option>
+                                <option value="literature">Literature</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="difficultySelect" class="block text-sm font-medium text-text-primary mb-2">Difficulty Level</label>
+                            <select id="difficultySelect" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value>Select difficulty</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="tagsInput" class="block text-sm font-medium text-text-primary mb-2">Tags</label>
+                            <input type="text" id="tagsInput" placeholder="Add tags (comma separated)" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                            <p class="text-xs text-text-secondary mt-1">e.g., algebra, equations, chapter-5</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Options -->
+                <div id="processingOptionsSection" class="bg-surface rounded-2xl shadow-card p-6">
+                    <h3 class="text-lg font-semibold text-text-primary font-heading mb-4">Generate Content</h3>
+                    
+                    <div class="space-y-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" id="generateSummary" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                            <div>
+                                <span class="text-text-primary font-medium">Summaries</span>
+                                <p class="text-xs text-text-secondary">Key points and concepts</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" id="generateFlashcards" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                            <div>
+                                <span class="text-text-primary font-medium">Flashcards</span>
+                                <p class="text-xs text-text-secondary">Interactive study cards</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" id="generateQuizzes" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                            <div>
+                                <span class="text-text-primary font-medium">Quizzes</span>
+                                <p class="text-xs text-text-secondary">Practice questions</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-primary-50 rounded-lg">
+                        <div class="flex items-center space-x-2 text-sm text-primary">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Estimated time: 2-3 minutes</span>
+                        </div>
+                    </div>
+
+                    <button id="startProcessingBtn" disabled class="w-full mt-4 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium disabled:bg-gray-300 disabled:cursor-not-allowed">
+                        Start Processing
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Layout -->
+        <div class="md:hidden">
+            <!-- Step 1: Upload -->
+            <div id="mobileUploadStep" class="bg-surface rounded-2xl shadow-card p-6">
+                <h2 class="text-xl font-semibold text-text-primary font-heading mb-6">Upload Files</h2>
+                
+                <!-- Mobile Drag and Drop Zone -->
+                <div id="mobileDropZone" class="border-2 border-dashed border-border rounded-xl p-8 text-center">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-primary-50 rounded-full flex items-center justify-center mx-auto">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-text-primary mb-2">Add Files</h3>
+                            <p class="text-sm text-text-secondary">Tap to select or take photo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Action Buttons -->
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                    <button id="cameraBtn" class="flex items-center justify-center space-x-2 py-3 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span class="text-sm font-medium">Camera</span>
+                    </button>
+                    <button id="filesBtn" class="flex items-center justify-center space-x-2 py-3 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span class="text-sm font-medium">Files</span>
+                    </button>
+                </div>
+
+                <!-- Mobile File Input -->
+                <input type="file" id="mobileFileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden" />
+
+                <!-- Mobile Continue Button -->
+                <button id="mobileContinueBtn" disabled class="w-full mt-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium disabled:bg-gray-300 disabled:cursor-not-allowed">
+                    Continue to Categorization
+                </button>
+            </div>
+
+            <!-- Step 2: Categorization (Hidden initially) -->
+            <div id="mobileCategorizeStep" class="hidden bg-surface rounded-2xl shadow-card p-6">
+                <h2 class="text-xl font-semibold text-text-primary font-heading mb-6">Categorize Content</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="mobileSubjectSelect" class="block text-sm font-medium text-text-primary mb-2">Subject Area</label>
+                        <select id="mobileSubjectSelect" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value>Select subject</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="history">History</option>
+                            <option value="literature">Literature</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="mobileDifficultySelect" class="block text-sm font-medium text-text-primary mb-2">Difficulty Level</label>
+                        <select id="mobileDifficultySelect" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value>Select difficulty</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="mobileTagsInput" class="block text-sm font-medium text-text-primary mb-2">Tags</label>
+                        <input type="text" id="mobileTagsInput" placeholder="Add tags (comma separated)" class="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                    </div>
+                </div>
+
+                <div class="flex space-x-3 mt-6">
+                    <button id="mobileBackBtn" class="flex-1 py-3 border border-border text-text-primary rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                        Back
+                    </button>
+                    <button id="mobileNextBtn" class="flex-1 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium">
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Processing Options (Hidden initially) -->
+            <div id="mobileProcessStep" class="hidden bg-surface rounded-2xl shadow-card p-6">
+                <h2 class="text-xl font-semibold text-text-primary font-heading mb-6">Generate Content</h2>
+                
+                <div class="space-y-4">
+                    <label class="flex items-center space-x-3 p-3 border border-border rounded-lg">
+                        <input type="checkbox" id="mobileGenerateSummary" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                        <div class="flex-1">
+                            <span class="text-text-primary font-medium">Summaries</span>
+                            <p class="text-xs text-text-secondary">Key points and concepts</p>
+                        </div>
+                    </label>
+
+                    <label class="flex items-center space-x-3 p-3 border border-border rounded-lg">
+                        <input type="checkbox" id="mobileGenerateFlashcards" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                        <div class="flex-1">
+                            <span class="text-text-primary font-medium">Flashcards</span>
+                            <p class="text-xs text-text-secondary">Interactive study cards</p>
+                        </div>
+                    </label>
+
+                    <label class="flex items-center space-x-3 p-3 border border-border rounded-lg">
+                        <input type="checkbox" id="mobileGenerateQuizzes" checked class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                        <div class="flex-1">
+                            <span class="text-text-primary font-medium">Quizzes</span>
+                            <p class="text-xs text-text-secondary">Practice questions</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="mt-6 p-4 bg-primary-50 rounded-lg">
+                    <div class="flex items-center space-x-2 text-sm text-primary">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Estimated time: 2-3 minutes</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-3 mt-6">
+                    <button id="mobileProcessBackBtn" class="flex-1 py-3 border border-border text-text-primary rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                        Back
+                    </button>
+                    <button id="mobileStartProcessingBtn" class="flex-1 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium">
+                        Start Processing
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Processing Modal -->
+        <div id="processingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-surface rounded-2xl shadow-elevated max-w-md w-full p-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-2">Processing Your Materials</h3>
+                    <p id="processingStatus" class="text-text-secondary mb-6">Analyzing content structure...</p>
+                    
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                        <div id="processingProgressBar" class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary">This may take a few minutes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="errorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-surface rounded-2xl shadow-elevated max-w-md w-full p-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-error-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-2">Processing Failed</h3>
+                    <p id="errorMessage" class="text-text-secondary mb-6">Unable to process the uploaded files. Please try again.</p>
+                    
+                    <div class="flex space-x-3">
+                        <button id="closeErrorBtn" class="flex-1 py-2 border border-border text-text-primary rounded-lg hover:bg-gray-50 transition-colors">
+                            Close
+                        </button>
+                        <button id="retryBtn" class="flex-1 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive">
+                            Retry
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // File upload handling
+        const dropZone = document.getElementById('dropZone');
+        const mobileDropZone = document.getElementById('mobileDropZone');
+        const fileInput = document.getElementById('fileInput');
+        const mobileFileInput = document.getElementById('mobileFileInput');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const filesList = document.getElementById('filesList');
+        const filesContainer = document.getElementById('filesContainer');
+        const startProcessingBtn = document.getElementById('startProcessingBtn');
+        const mobileContinueBtn = document.getElementById('mobileContinueBtn');
+
+        let uploadedFiles = [];
+
+        // Desktop drag and drop
+        if (dropZone) {
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-primary', 'bg-primary-50');
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+                handleFiles(e.dataTransfer.files);
+            });
+        }
+
+        // Mobile file selection
+        if (mobileDropZone) {
+            document.getElementById('filesBtn').addEventListener('click', () => mobileFileInput.click());
+            document.getElementById('cameraBtn').addEventListener('click', () => {
+                mobileFileInput.setAttribute('capture', 'camera');
+                mobileFileInput.click();
+            });
+        }
+
+        // File input change handlers
+        fileInput?.addEventListener('change', (e) => handleFiles(e.target.files));
+        mobileFileInput?.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+
+            // Show upload progress
+            uploadProgress?.classList.remove('hidden');
+            
+            // Simulate upload progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        uploadProgress?.classList.add('hidden');
+                        displayUploadedFiles(files);
+                        enableProcessing();
+                    }, 500);
+                }
+                
+                if (progressBar) progressBar.style.width = progress + '%';
+                if (progressPercent) progressPercent.textContent = Math.round(progress) + '%';
+            }, 200);
+
+            uploadedFiles = Array.from(files);
+        }
+
+        function displayUploadedFiles(files) {
+            if (!filesContainer) return;
+
+            filesContainer.innerHTML = '';
+            filesList?.classList.remove('hidden');
+
+            Array.from(files).forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+                
+                const fileIcon = getFileIcon(file.type);
+                fileItem.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            ${fileIcon}
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-text-primary">${file.name}</p>
+                            <p class="text-xs text-text-secondary">${formatFileSize(file.size)}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFile(${index})" class="text-text-secondary hover:text-error transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                `;
+                
+                filesContainer.appendChild(fileItem);
+            });
+
+            // Show OCR section for images
+            const hasImages = Array.from(files).some(file => file.type.startsWith('image/'));
+            if (hasImages) {
+                setTimeout(() => {
+                    showOCRProcessing();
+                }, 1000);
+            }
+        }
+
+        function getFileIcon(fileType) {
+            if (fileType === 'application/pdf') {
+                return '<svg class="w-5 h-5 text-error" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>';
+            } else if (fileType.startsWith('image/')) {
+                return '<svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/></svg>';
+            }
+            return '<svg class="w-5 h-5 text-text-secondary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            if (uploadedFiles.length === 0) {
+                filesList?.classList.add('hidden');
+                disableProcessing();
+            } else {
+                displayUploadedFiles(uploadedFiles);
+            }
+        }
+
+        function showOCRProcessing() {
+            const ocrSection = document.getElementById('ocrSection');
+            const ocrPreview = document.getElementById('ocrPreview');
+            
+            if (!ocrSection || !ocrPreview) return;
+            
+            ocrSection.classList.remove('hidden');
+            
+            // Simulate OCR processing
+            setTimeout(() => {
+                ocrPreview.innerHTML = `
+                    <p class="text-text-primary">Sample extracted text:</p>
+                    <p class="mt-2 text-sm">"Introduction to Machine Learning concepts and algorithms. This chapter covers supervised learning, unsupervised learning, and reinforcement learning approaches..."</p>
+                    <div class="mt-3 flex items-center space-x-2 text-xs text-success">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Text extraction completed</span>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function enableProcessing() {
+            startProcessingBtn?.removeAttribute('disabled');
+            mobileContinueBtn?.removeAttribute('disabled');
+        }
+
+        function disableProcessing() {
+            startProcessingBtn?.setAttribute('disabled', 'true');
+            mobileContinueBtn?.setAttribute('disabled', 'true');
+        }
+
+        // Mobile workflow
+        const mobileUploadStep = document.getElementById('mobileUploadStep');
+        const mobileCategorizeStep = document.getElementById('mobileCategorizeStep');
+        const mobileProcessStep = document.getElementById('mobileProcessStep');
+
+        document.getElementById('mobileContinueBtn')?.addEventListener('click', () => {
+            updateMobileStep(2);
+            mobileUploadStep?.classList.add('hidden');
+            mobileCategorizeStep?.classList.remove('hidden');
+        });
+
+        document.getElementById('mobileBackBtn')?.addEventListener('click', () => {
+            updateMobileStep(1);
+            mobileCategorizeStep?.classList.add('hidden');
+            mobileUploadStep?.classList.remove('hidden');
+        });
+
+        document.getElementById('mobileNextBtn')?.addEventListener('click', () => {
+            updateMobileStep(3);
+            mobileCategorizeStep?.classList.add('hidden');
+            mobileProcessStep?.classList.remove('hidden');
+        });
+
+        document.getElementById('mobileProcessBackBtn')?.addEventListener('click', () => {
+            updateMobileStep(2);
+            mobileProcessStep?.classList.add('hidden');
+            mobileCategorizeStep?.classList.remove('hidden');
+        });
+
+        function updateMobileStep(step) {
+            // Update step indicators
+            for (let i = 1; i <= 3; i++) {
+                const stepElement = document.getElementById(`step${i}`);
+                const circle = stepElement?.querySelector('div');
+                const text = stepElement?.querySelector('span');
+                
+                if (i <= step) {
+                    circle?.classList.remove('bg-gray-200', 'text-text-secondary');
+                    circle?.classList.add('bg-primary', 'text-white');
+                    text?.classList.remove('text-text-secondary');
+                    text?.classList.add('text-primary');
+                } else {
+                    circle?.classList.remove('bg-primary', 'text-white');
+                    circle?.classList.add('bg-gray-200', 'text-text-secondary');
+                    text?.classList.remove('text-primary');
+                    text?.classList.add('text-text-secondary');
+                }
+            }
+        }
+
+        // Processing functionality
+        const processingModal = document.getElementById('processingModal');
+        const errorModal = document.getElementById('errorModal');
+        const processingStatus = document.getElementById('processingStatus');
+        const processingProgressBar = document.getElementById('processingProgressBar');
+
+        document.getElementById('startProcessingBtn')?.addEventListener('click', startProcessing);
+        document.getElementById('mobileStartProcessingBtn')?.addEventListener('click', startProcessing);
+
+        function startProcessing() {
+            processingModal?.classList.remove('hidden');
+            
+            const statuses = [
+                'Analyzing content structure...',
+                'Extracting key concepts...',
+                'Generating summaries...',
+                'Creating flashcards...',
+                'Building practice quizzes...',
+                'Finalizing study materials...'
+            ];
+            
+            let currentStatus = 0;
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        processingModal?.classList.add('hidden');
+                        // Redirect to dashboard or show success
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else if (progress > (currentStatus + 1) * 16.67 && currentStatus < statuses.length - 1) {
+                    currentStatus++;
+                    if (processingStatus) {
+                        processingStatus.textContent = statuses[currentStatus];
+                    }
+                }
+                
+                if (processingProgressBar) {
+                    processingProgressBar.style.width = progress + '%';
+                }
+            }, 300);
+        }
+
+        // Error handling
+        document.getElementById('closeErrorBtn')?.addEventListener('click', () => {
+            errorModal?.classList.add('hidden');
+        });
+
+        document.getElementById('retryBtn')?.addEventListener('click', () => {
+            errorModal?.classList.add('hidden');
+            startProcessing();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial state
+            disableProcessing();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyGenie - Transform Your Learning Experience</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fstudygenie1904back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.7"></script>
+</head>
+<body class="bg-background font-sans">
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-border">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary mr-2" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 2L4 7v10c0 8.84 5.5 16.14 12 18 6.5-1.86 12-9.16 12-18V7L16 2zm0 4.5L24 10v7c0 6.27-3.78 11.44-8 12.5-4.22-1.06-8-6.23-8-12.5v-7l8-3.5z"/>
+                        <path d="M12 14l2 2 6-6"/>
+                    </svg>
+                    <span class="text-xl font-bold text-text-primary font-heading">StudyGenie</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-text-secondary hover:text-primary transition-colors">Features</a>
+                    <a href="#pricing" class="text-text-secondary hover:text-primary transition-colors">Pricing</a>
+                    <a href="#about" class="text-text-secondary hover:text-primary transition-colors">About</a>
+                    <div class="flex items-center space-x-3">
+                        <button id="loginBtn" class="px-4 py-2 text-primary hover:bg-primary-50 rounded-lg transition-colors">Login</button>
+                        <button id="registerBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive">Get Started</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-border">
+                <div class="flex flex-col space-y-4">
+                    <a href="#features" class="text-text-secondary hover:text-primary transition-colors">Features</a>
+                    <a href="#pricing" class="text-text-secondary hover:text-primary transition-colors">Pricing</a>
+                    <a href="#about" class="text-text-secondary hover:text-primary transition-colors">About</a>
+                    <div class="flex flex-col space-y-2 pt-4 border-t border-border">
+                        <button id="mobileLoginBtn" class="px-4 py-2 text-primary hover:bg-primary-50 rounded-lg transition-colors text-left">Login</button>
+                        <button id="mobileRegisterBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive">Get Started</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Authentication -->
+    <section class="relative min-h-screen flex items-center bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <svg class="w-full h-full" viewBox="0 0 100 100" fill="currentColor">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#grid)"/>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary font-heading leading-tight">
+                            Transform Your
+                            <span class="text-primary">Learning</span>
+                            Experience
+                        </h1>
+                        <p class="text-xl text-text-secondary leading-relaxed">
+                            Upload PDFs, images, and handwritten notes. Get AI-powered summaries, flashcards, and quizzes tailored to your learning style.
+                        </p>
+                    </div>
+
+                    <!-- Key Benefits -->
+                    <div class="grid sm:grid-cols-3 gap-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-text-primary font-medium">AI-Powered</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                </svg>
+                            </div>
+                            <span class="text-text-primary font-medium">Personalized</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                            <span class="text-text-primary font-medium">Gamified</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="heroRegisterBtn" class="px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium text-lg">
+                            Start Learning Free
+                        </button>
+                        <button class="px-8 py-4 border border-border text-text-primary rounded-lg hover:bg-gray-50 transition-colors font-medium text-lg">
+                            Watch Demo
+                        </button>
+                    </div>
+
+                    <!-- Social Proof -->
+                    <div class="flex items-center space-x-6 pt-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-text-primary">10K+</div>
+                            <div class="text-sm text-text-secondary">Students</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-text-primary">50K+</div>
+                            <div class="text-sm text-text-secondary">Study Materials</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-text-primary">95%</div>
+                            <div class="text-sm text-text-secondary">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentication Forms -->
+                <div class="lg:max-w-md mx-auto w-full">
+                    <div class="bg-surface rounded-2xl shadow-elevated p-8">
+                        <!-- Tab Navigation -->
+                        <div class="flex bg-gray-100 rounded-lg p-1 mb-6">
+                            <button id="loginTab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors bg-white text-primary shadow-sm">
+                                Login
+                            </button>
+                            <button id="registerTab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors text-text-secondary hover:text-text-primary">
+                                Register
+                            </button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <div id="loginForm" class="space-y-6">
+                            <div class="text-center mb-6">
+                                <h2 class="text-2xl font-bold text-text-primary font-heading">Welcome Back</h2>
+                                <p class="text-text-secondary mt-1">Continue your learning journey</p>
+                            </div>
+
+                            <form class="space-y-4">
+                                <div>
+                                    <label for="loginEmail" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="loginEmail" name="email" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="student@studygenie.com" />
+                                </div>
+
+                                <div>
+                                    <label for="loginPassword" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                                    <div class="relative">
+                                        <input type="password" id="loginPassword" name="password" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors pr-12" placeholder="password123" />
+                                        <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary hover:text-text-primary">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="w-4 h-4 text-primary border-border rounded focus:ring-primary" />
+                                        <span class="ml-2 text-sm text-text-secondary">Remember me</span>
+                                    </label>
+                                    <a href="javascript:void(0)" class="text-sm text-primary hover:text-primary-700">Forgot password?</a>
+                                </div>
+
+                                <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium">
+                                    Sign In
+                                </button>
+                            </form>
+
+                            <!-- Social Login -->
+                            <div class="mt-6">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-t border-border"></div>
+                                    </div>
+                                    <div class="relative flex justify-center text-sm">
+                                        <span class="px-2 bg-surface text-text-secondary">Or continue with</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                    <button class="flex items-center justify-center px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                                        <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=20&h=20&fit=crop&crop=center" alt="Google" class="w-5 h-5 mr-2" />
+                                        Google
+                                    </button>
+                                    <button class="flex items-center justify-center px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=20&h=20&fit=crop&crop=center" alt="Microsoft" class="w-5 h-5 mr-2" />
+                                        Microsoft
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Register Form -->
+                        <div id="registerForm" class="space-y-6 hidden">
+                            <div class="text-center mb-6">
+                                <h2 class="text-2xl font-bold text-text-primary font-heading">Create Account</h2>
+                                <p class="text-text-secondary mt-1">Start your personalized learning journey</p>
+                            </div>
+
+                            <form class="space-y-4">
+                                <div>
+                                    <label for="registerName" class="block text-sm font-medium text-text-primary mb-2">Full Name</label>
+                                    <input type="text" id="registerName" name="name" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="John Doe" />
+                                </div>
+
+                                <div>
+                                    <label for="registerEmail" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="registerEmail" name="email" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="john@example.com" />
+                                </div>
+
+                                <div>
+                                    <label for="registerPassword" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                                    <div class="relative">
+                                        <input type="password" id="registerPassword" name="password" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors pr-12" placeholder="Create a strong password" />
+                                        <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary hover:text-text-primary">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="academicLevel" class="block text-sm font-medium text-text-primary mb-2">Academic Level</label>
+                                    <select id="academicLevel" name="academicLevel" required class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                                        <option value>Select your level</option>
+                                        <option value="high-school">High School</option>
+                                        <option value="undergraduate">Undergraduate</option>
+                                        <option value="graduate">Graduate</option>
+                                        <option value="postgraduate">Postgraduate</option>
+                                        <option value="professional">Professional</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <input type="checkbox" id="terms" required class="w-4 h-4 text-primary border-border rounded focus:ring-primary mt-1" />
+                                    <label for="terms" class="ml-2 text-sm text-text-secondary">
+                                        I agree to the <a href="javascript:void(0)" class="text-primary hover:text-primary-700">Terms of Service</a> and <a href="javascript:void(0)" class="text-primary hover:text-primary-700">Privacy Policy</a>
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors btn-interactive font-medium">
+                                    Create Account
+                                </button>
+                            </form>
+
+                            <!-- Social Register -->
+                            <div class="mt-6">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-t border-border"></div>
+                                    </div>
+                                    <div class="relative flex justify-center text-sm">
+                                        <span class="px-2 bg-surface text-text-secondary">Or register with</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3">
+                                    <button class="flex items-center justify-center px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                                        <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=20&h=20&fit=crop&crop=center" alt="Google" class="w-5 h-5 mr-2" />
+                                        Google
+                                    </button>
+                                    <button class="flex items-center justify-center px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-colors">
+                                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=20&h=20&fit=crop&crop=center" alt="Microsoft" class="w-5 h-5 mr-2" />
+                                        Microsoft
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-primary font-heading mb-4">
+                    Powerful Features for Modern Learning
+                </h2>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                    Transform any study material into interactive learning experiences with our AI-powered platform
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- PDF Processing -->
+                <div class="bg-surface rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-shadow">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">Smart PDF Processing</h3>
+                    <p class="text-text-secondary mb-4">
+                        Upload PDFs and images to automatically extract text and convert handwritten notes using advanced OCR technology.
+                    </p>
+                    <div class="flex items-center text-primary font-medium">
+                        <span>Learn more</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- AI Content Generation -->
+                <div class="bg-surface rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-shadow">
+                    <div class="w-16 h-16 bg-secondary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">AI-Powered Content</h3>
+                    <p class="text-text-secondary mb-4">
+                        Generate summaries, flashcards, and quizzes automatically. Get explanations in three levels: kid-friendly, simple, and exam-mode.
+                    </p>
+                    <div class="flex items-center text-secondary font-medium">
+                        <span>Learn more</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Personalized Learning -->
+                <div class="bg-surface rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-shadow">
+                    <div class="w-16 h-16 bg-accent-100 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">Personalized Learning</h3>
+                    <p class="text-text-secondary mb-4">
+                        Adaptive learning paths with spaced repetition, gamified progress tracking, and performance analytics tailored to your style.
+                    </p>
+                    <div class="flex items-center text-accent font-medium">
+                        <span>Learn more</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gradient-to-br from-primary-50 to-secondary-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-primary font-heading mb-4">
+                    How StudyGenie Works
+                </h2>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                    Transform your study materials in three simple steps
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">Upload Materials</h3>
+                    <p class="text-text-secondary">
+                        Drag and drop PDFs, images, or handwritten notes. Our OCR technology extracts text from any format.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">AI Processing</h3>
+                    <p class="text-text-secondary">
+                        Our AI analyzes your content and generates personalized summaries, flashcards, and practice quizzes.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary font-heading mb-3">Learn & Track</h3>
+                    <p class="text-text-secondary">
+                        Study with adaptive learning paths, track your progress, and earn achievements as you master topics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 text-primary mr-2" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M16 2L4 7v10c0 8.84 5.5 16.14 12 18 6.5-1.86 12-9.16 12-18V7L16 2zm0 4.5L24 10v7c0 6.27-3.78 11.44-8 12.5-4.22-1.06-8-6.23-8-12.5v-7l8-3.5z"/>
+                            <path d="M12 14l2 2 6-6"/>
+                        </svg>
+                        <span class="text-xl font-bold font-heading">StudyGenie</span>
+                    </div>
+                    <p class="text-gray-300">
+                        Transforming education through AI-powered personalized learning experiences.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <div class="space-y-2">
+                        <a href="dashboard.html" class="block text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="material_upload_and_processing.html" class="block text-gray-300 hover:text-white transition-colors">Upload Materials</a>
+                        <a href="quiz_and_assessment_center.html" class="block text-gray-300 hover:text-white transition-colors">Quizzes</a>
+                        <a href="progress_analytics_dashboard.html" class="block text-gray-300 hover:text-white transition-colors">Analytics</a>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <div class="space-y-2">
+                        <a href="javascript:void(0)" class="block text-gray-300 hover:text-white transition-colors">Help Center</a>
+                        <a href="javascript:void(0)" class="block text-gray-300 hover:text-white transition-colors">Contact Us</a>
+                        <a href="javascript:void(0)" class="block text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="javascript:void(0)" class="block text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+                    </div>
+                </div>
+
+                <!-- Connect -->
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 StudyGenie. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Import Supabase client
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Load Supabase client
+        const supabaseScript = document.createElement('script');
+        supabaseScript.src = '../js/supabase-client.js';
+        document.head.appendChild(supabaseScript);
+
+        // Wait for script to load
+        await new Promise(resolve => {
+            supabaseScript.onload = resolve;
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Authentication form tabs
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        function switchToLogin() {
+            if (loginTab && registerTab && loginForm && registerForm) {
+                loginTab.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                loginTab.classList.remove('text-text-secondary');
+                registerTab.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                registerTab.classList.add('text-text-secondary');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            }
+        }
+
+        function switchToRegister() {
+            if (loginTab && registerTab && loginForm && registerForm) {
+                registerTab.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                registerTab.classList.remove('text-text-secondary');
+                loginTab.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                loginTab.classList.add('text-text-secondary');
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        // Tab event listeners
+        loginTab?.addEventListener('click', switchToLogin);
+        registerTab?.addEventListener('click', switchToRegister);
+
+        // Button event listeners
+        document.getElementById('loginBtn')?.addEventListener('click', switchToLogin);
+        document.getElementById('registerBtn')?.addEventListener('click', switchToRegister);
+        document.getElementById('heroRegisterBtn')?.addEventListener('click', switchToRegister);
+        document.getElementById('mobileLoginBtn')?.addEventListener('click', switchToLogin);
+        document.getElementById('mobileRegisterBtn')?.addEventListener('click', switchToRegister);
+
+        // Wait for authManager to be available
+        const checkAuthManager = setInterval(() => {
+            if (window.authManager) {
+                clearInterval(checkAuthManager);
+                setupAuthentication();
+            }
+        }, 100);
+
+        function setupAuthentication() {
+            // Login form submission
+            const loginFormElement = document.querySelector('#loginForm form');
+            if (loginFormElement) {
+                loginFormElement.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('loginEmail')?.value;
+                    const password = document.getElementById('loginPassword')?.value;
+                    
+                    if (!email || !password) {
+                        window.authManager.showMessage('Please fill in all fields', 'error');
+                        return;
+                    }
+
+                    // Show loading state
+                    const submitBtn = loginFormElement.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Signing in...';
+                    submitBtn.disabled = true;
+
+                    const result = await window.authManager.signIn(email, password);
+                    
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+
+                    // Success handling is done in AuthManager through auth state change listener
+                });
+            }
+
+            // Register form submission
+            const registerFormElement = document.querySelector('#registerForm form');
+            if (registerFormElement) {
+                registerFormElement.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const fullName = document.getElementById('registerName')?.value;
+                    const email = document.getElementById('registerEmail')?.value;
+                    const password = document.getElementById('registerPassword')?.value;
+                    const academicLevel = document.getElementById('academicLevel')?.value;
+                    const termsAccepted = document.getElementById('terms')?.checked;
+                    
+                    if (!fullName || !email || !password || !academicLevel) {
+                        window.authManager.showMessage('Please fill in all fields', 'error');
+                        return;
+                    }
+
+                    if (!termsAccepted) {
+                        window.authManager.showMessage('Please accept the Terms of Service', 'error');
+                        return;
+                    }
+
+                    // Show loading state
+                    const submitBtn = registerFormElement.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Creating account...';
+                    submitBtn.disabled = true;
+
+                    const result = await window.authManager.signUp(email, password, {
+                        fullName,
+                        academicLevel
+                    });
+                    
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+
+                    // For successful registration, user might need email verification
+                    if (result.success) {
+                        // Switch to login form after successful registration
+                        setTimeout(() => {
+                            switchToLogin();
+                        }, 3000);
+                    }
+                });
+            }
+
+            // Social authentication buttons
+            document.querySelectorAll('button').forEach(button => {
+                // Google sign in
+                if (button.textContent.includes('Google')) {
+                    button.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        await window.authManager.signInWithProvider('google');
+                    });
+                }
+                
+                // Microsoft sign in
+                if (button.textContent.includes('Microsoft')) {
+                    button.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        await window.authManager.signInWithProvider('azure');
+                    });
+                }
+            });
+
+            // Password visibility toggle
+            document.querySelectorAll('button[type="button"]').forEach(button => {
+                const svg = button.querySelector('svg');
+                if (svg && svg.getAttribute('viewBox') === '0 0 24 24') {
+                    button.addEventListener('click', () => {
+                        const input = button.previousElementSibling;
+                        if (input && (input.type === 'password' || input.type === 'text')) {
+                            input.type = input.type === 'password' ? 'text' : 'password';
+                        }
+                    });
+                }
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Check if user is already authenticated and redirect
+        const checkInitialAuth = setInterval(() => {
+            if (window.authManager) {
+                clearInterval(checkInitialAuth);
+                // If user is already authenticated, redirect to dashboard
+                if (window.authManager.isAuthenticated()) {
+                    window.location.href = '/pages/dashboard.html';
+                }
+            }
+        }, 100);
+    });
+</script>
+</body>
+</html>

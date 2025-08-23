@@ -1,0 +1,41 @@
+{
+    "name": "studygenie",
+    "version": "1.0.0",
+    "description": "AI-powered personalized learning platform with Supabase backend integration",
+    "main": "index.html",
+    "dependencies": {
+        "@dhiwise/component-tagger": "^1.0.10",
+        "@tailwindcss/forms": "^0.5.7",
+        "tailwindcss-animate": "^1.0.7",
+        "tailwindcss-elevation": "^2.0.0",
+        "tailwindcss-fluid-type": "^2.0.7",
+        "serve": "^14.2.3"
+    },
+    "scripts": {
+        "build:css": "npx @dhiwise/component-tagger && npx tailwindcss -i ./css/tailwind.css -o ./css/main.css",
+        "watch:css": "npx @dhiwise/component-tagger && npx tailwindcss -i ./css/tailwind.css -o ./css/main.css --watch",
+        "dev": "npm run watch:css",
+        "start": "serve -l 5173 .",
+        "setup:supabase": "echo 'Please configure your Supabase URL and API key in js/supabase-client.js'",
+        "migrate:supabase": "echo 'Please run the migration file supabase/migrations/20250122195142_studygenie_full_integration.sql in your Supabase dashboard'"
+    },
+    "author": "StudyGenie Team",
+    "license": "MIT",
+    "devDependencies": {
+        "tailwindcss": "^3.4.17",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/container-queries": "^0.1.1",
+        "@tailwindcss/line-clamp": "^0.1.0",
+        "@tailwindcss/typography": "^0.5.16"
+    },
+    "keywords": [
+        "education",
+        "ai",
+        "learning",
+        "supabase",
+        "study",
+        "quiz",
+        "flashcards",
+        "gamification"
+    ]
+}
